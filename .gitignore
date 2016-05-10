@@ -46,8 +46,8 @@ atlassian-ide-plugin.xml
 com_crashlytics_export_strings.xml
 crashlytics.properties
 crashlytics-build.properties
-*.p12
-auth.*
+#*.p12
+#auth.*
 vendor/
 .env
 
