@@ -4,7 +4,7 @@ date_default_timezone_set("America/Los_Angeles");
 $base = realpath(dirname($_SERVER["SCRIPT_FILENAME"]) . "/..") . "/";
 
 
-require "${base}vendor/autoload.php";
+require "${base}../vendor/autoload.php";
 
 use Google\Spreadsheet\DefaultServiceRequest;
 use Google\Spreadsheet\ServiceRequestFactory;
