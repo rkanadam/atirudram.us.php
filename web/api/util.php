@@ -12,7 +12,7 @@ use Google\Spreadsheet\ServiceRequestFactory;
 
 $scopes = implode(' ', array("https://spreadsheets.google.com/feeds", Google_Service_Drive::DRIVE_READONLY, Google_Service_Calendar::CALENDAR));
 
-$privateKey = file_get_contents("${base}auth.p12");
+$privateKey = base64_decode(getenv("GOOGLE_AUTH"));
 
 $clientEmail = "684263653197-clcarg5o7cg5u2rq9h5arkf0fcbr3k57@developer.gserviceaccount.com";
 
