@@ -1,25 +1,29 @@
 <?php
 date_default_timezone_set("America/Los_Angeles");
 
-$base = realpath(dirname($_SERVER["SCRIPT_FILENAME"]) . "/..") . "/";
+$base = realpath(dirname($_SERVER["SCRIPT_FILENAME"]) . "/..");
 
 
-require "${base}../vendor/autoload.php";
+require "$base/../vendor/autoload.php";
 
 use Google\Spreadsheet\DefaultServiceRequest;
 use Google\Spreadsheet\ServiceRequestFactory;
 
-
 $scopes = implode(' ', array("https://spreadsheets.google.com/feeds", Google_Service_Drive::DRIVE_READONLY, Google_Service_Calendar::CALENDAR));
 
-$privateKey = base64_decode(getenv("GOOGLE_AUTH"));
+$auth = getenv("GOOGLE_AUTH");
+if (empty($auth)) {
+    $auth = file_get_contents("$base/api/auth.p12");
+} else {
+    $auth = base64_decode($auth);
+}
 
 $clientEmail = "684263653197-clcarg5o7cg5u2rq9h5arkf0fcbr3k57@developer.gserviceaccount.com";
 
 $credentials = new Google_Auth_AssertionCredentials(
     $clientEmail,
     $scopes,
-    $privateKey
+    $auth
 );
 
 $client = new Google_Client();
@@ -33,10 +37,6 @@ $accessToken = $accessToken->{"access_token"};
 $serviceRequest = new DefaultServiceRequest($accessToken);
 ServiceRequestFactory::setInstance($serviceRequest);
 
-$spreadsheetService = new Google\Spreadsheet\SpreadsheetService();
-$spreadsheetFeed = $spreadsheetService->getSpreadsheets();
-
-
 function startsWith($haystack, $needle)
 {
     // search backwards starting from haystack length characters from the end
@@ -48,5 +48,3 @@ function endsWith($haystack, $needle)
     // search forward starting from end minus needle length characters
     return $needle === "" || (($temp = strlen($haystack) - strlen($needle)) >= 0 && strpos($haystack, $needle, $temp) !== FALSE);
 }
-
-$drive = new Google_Service_Drive($client);
