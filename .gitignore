@@ -48,6 +48,6 @@ crashlytics.properties
 crashlytics-build.properties
 *.p12
 auth.*
-vendor/
+#vendor/
 .env
 

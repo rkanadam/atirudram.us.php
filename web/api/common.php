@@ -1,7 +1,13 @@
 <?php
 date_default_timezone_set("America/Los_Angeles");
 
-$base = realpath(dirname($_SERVER["SCRIPT_FILENAME"]) . "/..");
+$fileName = $_SERVER["SCRIPT_FILENAME"];
+$matches = array ();
+if (preg_match("/^(.*)\\/api\\/.*$/", $fileName, $matches)) {
+    $base = realpath($matches[1]);
+} else {
+    $base = realpath(dirname($fileName) . "/..");
+}
 
 
 require "$base/../vendor/autoload.php";
