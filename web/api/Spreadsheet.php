@@ -13,7 +13,7 @@ class Spreadsheet
         $this->sheet = $this->spreadsheet->getWorksheets()->getByTitle($this->worksheetName);
     }
 
-    function getListFeed($query = array ())
+    function getListFeed($query = array())
     {
         $entries = $this->sheet->getListFeed($query)->getEntries();
         $values = array();
@@ -28,5 +28,15 @@ class Spreadsheet
         return $this->sheet->getListFeed()->insert($values);
 
     }
+
+    function removeFromListFeed($query)
+    {
+        $entries = $this->sheet->getListFeed($query)->getEntries();
+        for ($i = count($entries); $i > 0; --$i) {
+            $entry = $entries[$i-1];
+            $entry->delete ();
+        }
+    }
+
 }
 
