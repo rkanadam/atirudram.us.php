@@ -3,7 +3,7 @@
 require_once "../common.php";
 require_once "$base/api/Spreadsheet.php";
 
-$email = $_REQUEST["email"];
+$email = strtolower($_REQUEST["email"]);
 $phone = $_REQUEST["password"];
 $method = strtolower($_SERVER["REQUEST_METHOD"]);
 $action = strtolower($_REQUEST["action"]);
